@@ -66,6 +66,6 @@ time_to_seconds <- function(time_str) {
 #' @param seconds number
 #' @keywords internal
 convert_seconds_to_hms <- function(seconds) {
-  period <- lubridate::seconds_to_period(seconds)
+  period <- lubridate::seconds_to_period(round(seconds))
   return(sprintf("%d:%02d:%02d", period@hour, lubridate::minute(period), lubridate::second(period)))
 }
