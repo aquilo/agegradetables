@@ -20,9 +20,19 @@
 # https://r-pkgs.org
 
 compare_to_best <- function(mytime, distance, gender, age) {
+  if (is.character(mytime)) {
+    # Convert time string to seconds
+    seconds <- time_to_seconds(mytime)
+  } else if (is.numeric(mytime)) {
+    # Input is already in seconds
+    seconds <- mytime
+  } else {
+    stop("Invalid input: must be a time string in 'HH:MM:SS' format or a numeric value representing seconds.")
+  }
+
   interpolated_seconds <- perform_interpolation(distance, gender, age, "record_sec")
   interpolated_coeff <- perform_interpolation(distance, gender, age, "coeff")
-  100 * interpolated_seconds / time_to_seconds(mytime) / interpolated_coeff
+  100 * interpolated_seconds / seconds / interpolated_coeff
 }
 
 # Utility function for interpolation
@@ -84,4 +94,14 @@ convert_seconds_to_hms <- function(seconds) {
 # convert_seconds_to_hms <- function(seconds) {
 #   period <- lubridate::seconds_to_period(round(seconds))
 #   return(sprintf("%d:%02d:%02d", period@hour, lubridate::minute(period), lubridate::second(period)))
+# }
+
+# Function to convert time string to seconds
+# time_to_seconds <- function(time_str) {
+#   time_parts <- unlist(strsplit(time_str, ":"))
+#   hours <- as.numeric(time_parts[1])
+#   minutes <- as.numeric(time_parts[2])
+#   seconds <- as.numeric(time_parts[3])
+#   total_seconds <- hours * 3600 + minutes * 60 + seconds
+#   return(total_seconds)
 # }
