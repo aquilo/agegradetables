@@ -55,7 +55,9 @@ perform_interpolation <- function(distance, gender, age, column) {
   d <- agegradetables::agt_coefficients
   d <- d[d$gender == gender,]
   d <- d[d$age == age,]
-  d <- d[d$distance > (distance / 2),]
+  # d <- d[d$distance > (distance / 2),]
+  d <- d[order(d$distance),]
+
   filtered_data <- d
 
   # Perform linear interpolation
