@@ -66,6 +66,22 @@ time_to_seconds <- function(time_str) {
 #' @param seconds number
 #' @keywords internal
 convert_seconds_to_hms <- function(seconds) {
-  period <- lubridate::seconds_to_period(round(seconds))
-  return(sprintf("%d:%02d:%02d", period@hour, lubridate::minute(period), lubridate::second(period)))
+  if(!is.numeric(seconds)) {
+    stop("Input must be numeric")
+  }
+
+  # Calculate hours, minutes, and seconds
+  hours <- floor(seconds / 3600)
+  minutes <- floor((seconds %% 3600) / 60)
+  secs <- round(seconds %% 60)
+
+  # Format as HH:MM:SS
+  hms <- sprintf("%02d:%02d:%02d", "M",  hours, minutes, secs)
+
+  return(hms)
 }
+
+# convert_seconds_to_hms <- function(seconds) {
+#   period <- lubridate::seconds_to_period(round(seconds))
+#   return(sprintf("%d:%02d:%02d", period@hour, lubridate::minute(period), lubridate::second(period)))
+# }
