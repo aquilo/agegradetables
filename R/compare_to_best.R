@@ -12,13 +12,11 @@
 #' @export
 #'
 #' @examples
-#' compare_to_best("4:11:00", 42.190, "M", 51)  # Marathon
-#' compare_to_best("0:54:33", 10.000, "F", 36)  # 10k
-#' compare_to_best("1:38:15", 21.6648, "M", 40)  # Half marathon with some slope correction
-
+#' compare_to_best("4:11:00", 42.190, "M", 51) # Marathon
+#' compare_to_best("0:54:33", 10.000, "F", 36) # 10k
+#' compare_to_best("1:38:15", 21.6648, "M", 40) # Half marathon with some slope correction
 # https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html
 # https://r-pkgs.org
-
 compare_to_best <- function(mytime, distance, gender, age) {
   if (is.character(mytime)) {
     # Convert time string to seconds
@@ -44,7 +42,6 @@ compare_to_best <- function(mytime, distance, gender, age) {
 #' @param column character ("record_sec" of "coeff")
 #' @keywords internal
 perform_interpolation <- function(distance, gender, age, column) {
-
   # Filter the data for the specific gender and age
   # filtered_data <- agt_coefficients |>
   #   filter(gender == gender & age == age) |>
@@ -53,10 +50,10 @@ perform_interpolation <- function(distance, gender, age, column) {
   # print(filtered_data)
 
   d <- agegradetables::agt_coefficients
-  d <- d[d$gender == gender,]
-  d <- d[d$age == age,]
+  d <- d[d$gender == gender, ]
+  d <- d[d$age == age, ]
   # d <- d[d$distance > (distance / 2),]
-  d <- d[order(d$distance),]
+  d <- d[order(d$distance), ]
 
   filtered_data <- d
 
@@ -78,7 +75,7 @@ time_to_seconds <- function(time_str) {
 #' @param seconds number
 #' @keywords internal
 convert_seconds_to_hms <- function(seconds) {
-  if(!is.numeric(seconds)) {
+  if (!is.numeric(seconds)) {
     stop("Input must be numeric")
   }
 
@@ -88,7 +85,7 @@ convert_seconds_to_hms <- function(seconds) {
   secs <- round(seconds %% 60)
 
   # Format as HH:MM:SS
-  hms <- sprintf("%02d:%02d:%02d", "M",  hours, minutes, secs)
+  hms <- sprintf("%02d:%02d:%02d", "M", hours, minutes, secs)
 
   return(hms)
 }
