@@ -1,5 +1,3 @@
-# source("R/utils.R")
-
 #' Compare a Running Result
 #'
 #' @param mytime character. Time as HH:MM:SS
@@ -12,12 +10,12 @@
 #' @export
 #'
 #' @examples
-#' compare_to_best("4:11:00", 42.190, "M", 51) # Marathon
-#' compare_to_best("0:54:33", 10.000, "F", 36) # 10k
-#' compare_to_best("1:38:15", 21.6648, "M", 40) # Half marathon with some slope correction
+#' get_agt_grade("4:11:00", 42.190, "M", 51) # Marathon
+#' get_agt_grade("0:54:33", 10.000, "F", 36) # 10k
+#' get_agt_grade("1:38:15", 21.6648, "M", 40) # Half marathon with some slope correction
 # https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html
 # https://r-pkgs.org
-compare_to_best <- function(mytime, distance, gender, age) {
+get_agt_grade <- function(mytime, distance, gender, age) {
   if (is.character(mytime)) {
     # Convert time string to seconds
     seconds <- time_to_seconds(mytime)
@@ -28,9 +26,8 @@ compare_to_best <- function(mytime, distance, gender, age) {
     stop("Invalid input: must be a time string in 'HH:MM:SS' format or a numeric value representing seconds.")
   }
 
-  interpolated_seconds <- perform_interpolation(distance, gender, age, "record_sec")
-  interpolated_coeff <- perform_interpolation(distance, gender, age, "coeff")
-  100 * interpolated_seconds / seconds / interpolated_coeff
+  interpolated <- perform_interpolation(distance, gender, age)
+  100 * interpolated[1] / seconds / interpolated[2]
 }
 
 # Utility function for interpolation
@@ -39,27 +36,13 @@ compare_to_best <- function(mytime, distance, gender, age) {
 #' @param distance number (in kilometers)
 #' @param gender character ("F" or "M")
 #' @param age number (in years)
-#' @param column character ("record_sec" of "coeff")
+#' @return an array of 2: interpolated seconds, interpolated coefficient
 #' @keywords internal
-perform_interpolation <- function(distance, gender, age, column) {
-  # Filter the data for the specific gender and age
-  # filtered_data <- agt_coefficients |>
-  #   filter(gender == gender & age == age) |>
-  #   filter(distance > distance / 2) |>
-  #   arrange(distance)
-  # print(filtered_data)
-
-  d <- agegradetables::agt_coefficients
-  d <- d[d$gender == gender, ]
-  d <- d[d$age == age, ]
-  # d <- d[d$distance > (distance / 2),]
-  d <- d[order(d$distance), ]
-
-  filtered_data <- d
-
-  # Perform linear interpolation
-  interpolation <- stats::approx(filtered_data$distance, filtered_data[[column]], xout = as.numeric(distance))
-  return(interpolation$y)
+perform_interpolation <- function(distance, gender, age) {
+  filtered_data <- get_records(gender, age)
+  interpolation_s <- stats::approx(filtered_data$distance, filtered_data$record_sec, xout = as.numeric(distance))
+  interpolation_c <- stats::approx(filtered_data$distance, filtered_data$coeff, xout = as.numeric(distance))
+  return(c(interpolation_s$y, interpolation_c$y))
 }
 
 #' Seconds from time string
@@ -85,7 +68,7 @@ convert_seconds_to_hms <- function(seconds) {
   secs <- round(seconds %% 60)
 
   # Format as HH:MM:SS
-  hms <- sprintf("%02d:%02d:%02d", "M", hours, minutes, secs)
+  hms <- sprintf("%02d:%02d:%02d", hours, minutes, secs)
 
   return(hms)
 }

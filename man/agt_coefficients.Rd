@@ -17,13 +17,13 @@ A data frame with 3'990 rows and 5 columns:
 }
 }
 \source{
-<http://www.howardgrubb.co.uk/athletics/>
+https://github.com/AlanLyttonJones/Age-Grade-Tables/tree/master/2020%20Files
 }
 \usage{
 agt_coefficients
 }
 \description{
-A subset of data from the World Health Organization Global Tuberculosis
+Compiled from the "2020 Files" at https://github.com/AlanLyttonJones/Age-Grade-Tables
 Report ...
 }
 \keyword{datasets}

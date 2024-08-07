@@ -1,10 +1,10 @@
 Package: agegradetables
 Type: Package
-Title:  Grading Road-Running Performances Based on Gender and Age
-Version: 0.3.4
+Title: Grading Road-Running Performances Based on Gender and Age
+Version: 0.4.0
 Author: Adrian Herzog
 Maintainer: Adrian Herzog <adrian.herzog@me.com>
-Description: Compare a running result considering your age and gender.
+Description: Evaluate and compare different races using the road running performance tables based on gender and age from https://github.com/AlanLyttonJones/Age-Grade-Tables.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,5 +15,7 @@ Imports:
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

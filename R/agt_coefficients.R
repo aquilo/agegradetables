@@ -1,6 +1,6 @@
 #' Age Graded Tables
 #'
-#' A subset of data from the World Health Organization Global Tuberculosis
+#' Compiled from the "2020 Files" at https://github.com/AlanLyttonJones/Age-Grade-Tables
 #' Report ...
 #'
 #' @format ## `agt_coefficients`
@@ -13,5 +13,5 @@
 #'   \item{record_sec}{record in secods}
 #'   ...
 #' }
-#' @source <http://www.howardgrubb.co.uk/athletics/>
+#' @source https://github.com/AlanLyttonJones/Age-Grade-Tables/tree/master/2020%20Files
 "agt_coefficients"
