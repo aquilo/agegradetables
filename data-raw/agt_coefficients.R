@@ -4,7 +4,6 @@ rm(list = ls())
 
 library(dplyr)
 library("lubridate")
-source("R/utils.R")
 
 # Function to process the file
 process_file <- function(filename) {
@@ -14,12 +13,14 @@ process_file <- function(filename) {
   # Read all lines from the file
   lines <- readLines(filename)
 
-  data <- read.table(text = lines[1:2], header = FALSE, fill = TRUE, col.names = c("gender", "record"))
+  data <- read.table(text = lines[1:2], header = FALSE,
+                     fill = TRUE, col.names = c("gender", "record"))
   df1 <- data %>%
     mutate(track = file_code)
 
   # Read the remaining lines into a data frame
-  data <- read.table(text = lines[3:length(lines)], header = FALSE, fill = TRUE, col.names = c("gender", "age", "coeff"))
+  data <- read.table(text = lines[3:length(lines)], header = FALSE,
+                     fill = TRUE, col.names = c("gender", "age", "coeff"))
 
   # Create the first data frame with additional columns
   df2 <- data %>%
@@ -86,9 +87,9 @@ laengen <- c(
 )
 # Create a matrix and then convert it to a data frame
 matrix_data <- matrix(laengen, ncol = 2, byrow = TRUE)
-lengths <- data.frame(track = matrix_data[,1], distance = matrix_data[,2])
+lengths <- data.frame(track = matrix_data[, 1], distance = matrix_data[, 2])
 
-agt_coefficients  <- coeff |>
+agt_coefficients <- coeff |>
   left_join(tracks, by = c("gender", "track")) |>
   left_join(lengths, by = c("track")) |>
   mutate(
@@ -99,19 +100,6 @@ agt_coefficients  <- coeff |>
 
 
 ### Data initialized
-
-# Function to estimate seconds for a specific combination of distance, gender, and age
-estimate_seconds <- function(distance, gender, age) {
-  intercept <- coef(exp_model)["(Intercept)"]
-  slope_distance <- coef(exp_model)["distance"]
-  slope_genderM <- coef(exp_model)["genderM"]
-  slope_age <- coef(exp_model)["age"]
-
-  gender_coefficient <- ifelse(gender == "M", slope_genderM, 0)
-  log_seconds <- intercept + slope_distance * distance + gender_coefficient + slope_age * age
-  seconds <- exp(log_seconds)
-  return(seconds)
-}
 
 rm(coeff, matrix_data, result, laengen)
 

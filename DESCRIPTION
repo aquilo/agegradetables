@@ -1,7 +1,7 @@
 Package: agegradetables
 Type: Package
 Title: Grading Road-Running Performances Based on Gender and Age
-Version: 0.4.0
+Version: 0.4.1
 Author: Adrian Herzog
 Maintainer: Adrian Herzog <adrian.herzog@me.com>
 Description: Evaluate and compare different races using the road running performance tables based on gender and age from https://github.com/AlanLyttonJones/Age-Grade-Tables.

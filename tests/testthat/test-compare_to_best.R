@@ -11,4 +11,3 @@ test_that("convert_seconds_to_hms", {
 test_that("get_records", {
   expect_equal(dim(get_records("F", 65))[2], 4)
 })
-

@@ -4,7 +4,7 @@
 #' @param age number (in years)
 
 #'
-#' @return A data.frame (a subset of agt_coefficents with colums coeff, distance, record_sec)
+#' @return A data.frame (a subset of agt_coefficents with columns coeff, distance, record_sec)
 #' @export
 #'
 #' @examples

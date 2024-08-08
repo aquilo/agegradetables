@@ -23,7 +23,8 @@ get_agt_grade <- function(mytime, distance, gender, age) {
     # Input is already in seconds
     seconds <- mytime
   } else {
-    stop("Invalid input: must be a time string in 'HH:MM:SS' format or a numeric value representing seconds.")
+    stop(paste("Invalid input: must be a time string in 'HH:MM:SS'",
+               "format or a numeric value representing seconds."))
   }
 
   interpolated <- perform_interpolation(distance, gender, age)
@@ -40,8 +41,12 @@ get_agt_grade <- function(mytime, distance, gender, age) {
 #' @keywords internal
 perform_interpolation <- function(distance, gender, age) {
   filtered_data <- get_records(gender, age)
-  interpolation_s <- stats::approx(filtered_data$distance, filtered_data$record_sec, xout = as.numeric(distance))
-  interpolation_c <- stats::approx(filtered_data$distance, filtered_data$coeff, xout = as.numeric(distance))
+  interpolation_s <- stats::approx(filtered_data$distance,
+                                   filtered_data$record_sec,
+                                   xout = as.numeric(distance))
+  interpolation_c <- stats::approx(filtered_data$distance,
+                                   filtered_data$coeff,
+                                   xout = as.numeric(distance))
   return(c(interpolation_s$y, interpolation_c$y))
 }
 
@@ -75,7 +80,8 @@ convert_seconds_to_hms <- function(seconds) {
 
 # convert_seconds_to_hms <- function(seconds) {
 #   period <- lubridate::seconds_to_period(round(seconds))
-#   return(sprintf("%d:%02d:%02d", period@hour, lubridate::minute(period), lubridate::second(period)))
+#   return(sprintf("%d:%02d:%02d",
+#       period@hour, lubridate::minute(period), lubridate::second(period)))
 # }
 
 # Function to convert time string to seconds

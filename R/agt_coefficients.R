@@ -1,6 +1,7 @@
 #' Age Graded Tables
 #'
-#' Compiled from the "2020 Files" at https://github.com/AlanLyttonJones/Age-Grade-Tables
+#' Compiled from the "2020 Files" at
+#' https://github.com/AlanLyttonJones/Age-Grade-Tables
 #' Report ...
 #'
 #' @format ## `agt_coefficients`
