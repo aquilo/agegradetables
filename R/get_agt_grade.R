@@ -15,6 +15,7 @@
 #' get_agt_grade("1:38:15", 21.6648, "M", 40) # Half marathon with some slope correction
 # https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html
 # https://r-pkgs.org
+# https://github.com/DavisVaughan/extrachecks?tab=readme-ov-file
 get_agt_grade <- function(mytime, distance, gender, age) {
   if (is.character(mytime)) {
     # Convert time string to seconds
